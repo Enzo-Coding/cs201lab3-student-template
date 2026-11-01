@@ -235,57 +235,57 @@ public class Q1Test {
                } 
           }
 
-          Integer[] preorder = numTraversals[preorderTraversalIdx];
-          Integer[] postorder = numTraversals[postorderTraversalIdx];
-          Integer[] inorder = numTraversals[inorderTraversalIdx];
+          // Integer[] preorder = numTraversals[preorderTraversalIdx];
+          // Integer[] postorder = numTraversals[postorderTraversalIdx];
+          // Integer[] inorder = numTraversals[inorderTraversalIdx];
 
-          boolean[] result = new boolean[1];
-          result[0] = true;
+          // boolean[] result = new boolean[1];
+          // result[0] = true;
 
-          Map<Integer, Integer> map = new HashMap<>();
-          for (int i = 0; i < inorder.length; i++)
-               map.put(inorder[i], i);
+          // Map<Integer, Integer> map = new HashMap<>();
+          // for (int i = 0; i < inorder.length; i++)
+          //      map.put(inorder[i], i);
 
-          util(preorder, map, postorder, 0, inorder.length - 1, 0, postorder.length - 1, result);
+          // util(preorder, map, postorder, 0, inorder.length - 1, 0, postorder.length - 1, result);
 
-          if (result[0]) {
-               return formatTraversalString(preorderTraversalIdx, inorderTraversalIdx, postorderTraversalIdx);
-          } else {
-               return "Invalid Traversals";
+          // if (result[0]) {
+          //      return formatTraversalString(preorderTraversalIdx, inorderTraversalIdx, postorderTraversalIdx);
+          // } else {
+          //      return "Invalid Traversals";
+          // }
+
+          BinaryTree tree = new BinaryTree(numTraversals[preorderTraversalIdx][0]);
+          for (int i = 1; i < numTraversals[preorderTraversalIdx].length; i++) {
+               tree.add(numTraversals[preorderTraversalIdx][i], 0);
           }
 
-          // BinaryTree tree = new BinaryTree(numTraversals[preorderTraversalIdx][0]);
-          // for (int i = 1; i < numTraversals[preorderTraversalIdx].length; i++) {
-          //      tree.add(numTraversals[preorderTraversalIdx][i], 0);
-          // }
+          Integer[] postorder = tree.postorder();
 
-          // Integer[] postorder = tree.postorder();
+          for (int i = 0; i < numTraversals[postorderTraversalIdx].length; i++) {
+               if (!postorder[i].equals(numTraversals[postorderTraversalIdx][i])) {
+                    return "Invalid traversals";
+               }
+          }
 
-          // for (int i = 0; i < numTraversals[postorderTraversalIdx].length; i++) {
-          //      if (!postorder[i].equals(numTraversals[postorderTraversalIdx][i])) {
-          //           return "Invalid traversals";
-          //      }
-          // }
-
-          // return formatTraversalString(preorderTraversalIdx, inorderTraversalIdx, postorderTraversalIdx);
+          return formatTraversalString(preorderTraversalIdx, inorderTraversalIdx, postorderTraversalIdx);
      }
 
-     private static void util(Integer[] pre, Map<Integer, Integer> map, Integer[] post, int inStart, int inEnd, int preIndex, int postIndex, boolean[] result) {
-        if (inStart > inEnd)
-            return;
+//      private static void util(Integer[] pre, Map<Integer, Integer> map, Integer[] post, int inStart, int inEnd, int preIndex, int postIndex, boolean[] result) {
+//         if (inStart > inEnd)
+//             return;
 
-        Integer mid = map.get(pre[preIndex]);
-        if (mid == null || pre[preIndex] != post[postIndex]) {
-            result[0] = false;
-            return;
-        }
+//         Integer mid = map.get(pre[preIndex]);
+//         if (mid == null || pre[preIndex] != post[postIndex]) {
+//             result[0] = false;
+//             return;
+//         }
 
-        // check for left part of tree
-        util(pre, map, post, inStart, mid - 1, preIndex + 1, postIndex - (inEnd - mid) - 1, result);
+//         // check for left part of tree
+//         util(pre, map, post, inStart, mid - 1, preIndex + 1, postIndex - (inEnd - mid) - 1, result);
 
-        // check for right part of tree
-        util(pre, map, post, mid + 1, inEnd, preIndex + (mid - inStart) + 1, postIndex - 1, result);
-    }
+//         // check for right part of tree
+//         util(pre, map, post, mid + 1, inEnd, preIndex + (mid - inStart) + 1, postIndex - 1, result);
+//     }
 
 
      private static Integer[] fromStringToInt(String[] str) {
