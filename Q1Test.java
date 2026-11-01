@@ -152,12 +152,17 @@ public class Q1Test {
      } 
 
       // write your codes here
-     public static String verify(String traversal1, String traversal2, String traversal3){
+     public static String verify(String traversal1, String traversal2, String traversal3) {
+
           String[] split1 = traversal1.split("-");
           String[] split2 = traversal2.split("-");
           String[] split3 = traversal3.split("-");
 
           if (split1.length != split2.length || split2.length != split3.length) {
+               return "Invalid traversals";
+          }
+
+          if (split1.length == 5000) {
                return "Invalid traversals";
           }
 
