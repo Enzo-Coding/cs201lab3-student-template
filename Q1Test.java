@@ -53,6 +53,14 @@ class BinaryTree {
      return arr.toArray(new Integer[arr.size()]);
     }
 
+    public Integer[] inorder() {
+     int start = 0;
+     ArrayList<Integer> arr = new ArrayList<>();
+
+     addToInorder(arr, start);
+     return arr.toArray(new Integer[arr.size()]);
+    }
+
     public void addToPostorder(List<Integer> arr, int idx) {
           if (tree[idx] == 0) {
                return;
@@ -61,6 +69,16 @@ class BinaryTree {
           addToPostorder(arr, left_child(idx));
           addToPostorder(arr, right_child(idx));
           arr.add(tree[idx]);
+    }
+
+    public void addToInorder(List<Integer> arr, int idx) {
+          if (tree[idx] == 0) {
+               return;
+          }
+
+          addToInorder(arr, left_child(idx));
+          arr.add(tree[idx]);
+          addToInorder(arr, right_child(idx));
     }
 }
 
@@ -277,6 +295,14 @@ public class Q1Test {
 
           for (int i = 0; i < numTraversals[postorderTraversalIdx].length; i++) {
                if (!postorder[i].equals(numTraversals[postorderTraversalIdx][i])) {
+                    return "Invalid traversals";
+               }
+          }
+
+          Integer[] inorder = tree.inorder();
+
+          for (int i = 0; i < numTraversals[inorderTraversalIdx].length; i++) {
+               if (!inorder[i].equals(numTraversals[inorderTraversalIdx][i])) {
                     return "Invalid traversals";
                }
           }
