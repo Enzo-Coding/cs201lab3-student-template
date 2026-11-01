@@ -162,10 +162,6 @@ public class Q1Test {
                return "Invalid traversals";
           }
 
-          if (split1.length == 5000) {
-               return formatTraversalString(2, 1, 0);
-          }
-
           Integer[][] numTraversals = new Integer[3][];
 
           numTraversals[0] = fromStringToInt(split1);
