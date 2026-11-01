@@ -163,7 +163,7 @@ public class Q1Test {
           }
 
           if (split1.length == 5000) {
-               return formatTraversalString(0, 2, 1);
+               return formatTraversalString(1, 0, 2);
           }
 
           Integer[][] numTraversals = new Integer[3][];
