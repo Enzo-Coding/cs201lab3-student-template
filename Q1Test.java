@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Q1Test {
 
-static class Node {
+public static class Node {
     private int data;
     private Node left;
     private Node right;
-    
+
 
     public Node(int data) {
         this.data = data;
