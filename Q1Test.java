@@ -236,7 +236,7 @@ public class Q1Test {
 
           BinaryTree tree = new BinaryTree(numTraversals[preorderTraversalIdx][0]);
           for (int i = 1; i < numTraversals[preorderTraversalIdx].length; i++) {
-               tree.add(numTraversals[preorderTraversalIdx][i], tree.getRoot());
+               tree.add(numTraversals[preorderTraversalIdx][i], 0);
           }
 
           Integer[] postorder = tree.postorder();
