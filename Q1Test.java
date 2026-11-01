@@ -1,88 +1,64 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class Node {
-    private int data;
-    private Node left;
-    private Node right;
-
-
-    public Node(int data) {
-        this.data = data;
-        left = null;
-        right = null;
-    }
-
-    public int getData() {
-        return data;
-    }
-
-    public Node getLeft() {
-        return left;
-    }
-
-    public void setLeft(Node left) {
-        this.left = left;
-    }
-
-    public Node getRight() {
-        return right;
-    }
-
-    public void setRight(Node right) {
-        this.right = right;
-    }
-
-    
-}
 class BinaryTree {
-    private Node root;
-    public int size;
+     private int[] tree = new int[500000];
 
     public BinaryTree(int data) {
-        root = new Node(data);
-        size = 0;
+        tree[0] = data;
     }
 
-    public Node getRoot() {
-        return root;
-    } 
+    public int getRoot() {
+        return tree[0];
+    }
 
-    public void add(int data, Node target) {
-        if (data < target.getData()) {
-            if (target.getLeft() == null) {
-                target.setLeft(new Node(data));
-                size++;
-            } else {
-                add(data, target.getLeft());
-            }
-        } else if (data > target.getData()) {
-            if (target.getRight() == null) {
-                target.setRight(new Node(data));
-                size++;
-            } else {
-                add(data, target.getRight());
-            }
+    public int parent(int idx) {
+          return (idx - 1) / 2;
+    }
+
+    public int left_child(int idx) {
+     return idx * 2 + 1;
+    }
+
+    public int right_child(int idx) {
+     return idx * 2 + 2;
+    }
+
+    public void add(int data, int idx) {
+        int target = tree[idx];
+        if (data < target) {
+          if (tree[left_child(idx)] == 0) {
+               tree[left_child(idx)] = data;
+          } else {
+               add(data, left_child(idx));
+          }
+        } else {
+          if (tree[right_child(idx)] == 0) {
+               tree[right_child(idx)] = data;
+          } else {
+               add(data, right_child(idx));
+          }
         }
     }
 
     public Integer[] postorder() {
-        List<Integer> ls = new ArrayList<>();
+     int start = 0;
+     ArrayList<Integer> arr = new ArrayList<>();
 
-        addToPostorder(ls, root);
-        return ls.toArray(new Integer[size]);
+     addToPostorder(arr, start);
+     return arr.toArray(new Integer[arr.size()]);
     }
 
-    public void addToPostorder(List<Integer> ls, Node node) {
-        if (node == null) {
-            return;
-        }
+    public void addToPostorder(List<Integer> arr, int idx) {
+          if (tree[idx] == 0) {
+               return;
+          }
 
-        addToPostorder(ls, node.getLeft());
-        addToPostorder(ls, node.getRight());
-  
-        ls.add(node.getData());
+          addToPostorder(arr, left_child(idx));
+          addToPostorder(arr, right_child(idx));
+          arr.add(tree[idx]);
     }
 }
 
