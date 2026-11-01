@@ -260,6 +260,9 @@ public class Q1Test {
           }
 
           Integer[] postorder = tree.postorder();
+          if (postorder.length != numTraversals[preorderTraversalIdx].length) {
+               return "Invalid traversals";
+          }
 
           for (int i = 0; i < numTraversals[postorderTraversalIdx].length; i++) {
                if (!postorder[i].equals(numTraversals[postorderTraversalIdx][i])) {
