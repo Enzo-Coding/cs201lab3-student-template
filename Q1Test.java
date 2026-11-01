@@ -186,6 +186,7 @@ public class Q1Test {
                     return "Invalid traversals";
                }
 
+               if (isDecreasingSequence(remainingTraversals[0])) {
                switch (inorderTraversalIdx) {
                     case 0:
                          return formatTraversalString(1, 0, 2);
@@ -193,6 +194,16 @@ public class Q1Test {
                          return formatTraversalString(0, 1, 2);
                     case 2:
                          return formatTraversalString(0, 2, 1);
+                    }
+               } else {
+                    switch (inorderTraversalIdx) {
+                    case 0:
+                         return formatTraversalString(2, 0, 1);
+                    case 1:
+                         return formatTraversalString(2, 1, 0);
+                    case 2:
+                         return formatTraversalString(1, 2, 0);
+                    }  
                }
           }
 
