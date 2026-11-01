@@ -2,9 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Q1Test {
-
-public static class Node {
+class Node {
     private int data;
     private Node left;
     private Node right;
@@ -38,7 +36,7 @@ public static class Node {
 
     
 }
-static class BinaryTree {
+class BinaryTree {
     private Node root;
     public int size;
 
@@ -87,6 +85,8 @@ static class BinaryTree {
         ls.add(node.getData());
     }
 }
+
+public class Q1Test {
 
      public static void main(String[] args) {
 
