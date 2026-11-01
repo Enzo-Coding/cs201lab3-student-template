@@ -1,7 +1,9 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class BinaryTree {
      private int[] tree = new int[500000];
@@ -170,7 +172,6 @@ public class Q1Test {
                remainingTraversals[idx] = numTraversals[i];
                idx++;
           }
-          numTraversals[inorderTraversalIdx] = null;
 
           boolean traversal1RootEqualTraversal2Tail 
           = remainingTraversals[0][0].equals(remainingTraversals[1][remainingTraversals[1].length - 1]);
@@ -200,7 +201,7 @@ public class Q1Test {
           }
 
           int preorderTraversalIdx = -1;
-          int postorderTraversalIdx = -1 ;
+          int postorderTraversalIdx = -1;
 
           if (traversal1RootEqualTraversal2Tail) {
                switch (inorderTraversalIdx) {
@@ -234,21 +235,58 @@ public class Q1Test {
                } 
           }
 
-          BinaryTree tree = new BinaryTree(numTraversals[preorderTraversalIdx][0]);
-          for (int i = 1; i < numTraversals[preorderTraversalIdx].length; i++) {
-               tree.add(numTraversals[preorderTraversalIdx][i], 0);
+          Integer[] preorder = numTraversals[preorderTraversalIdx];
+          Integer[] postorder = numTraversals[postorderTraversalIdx];
+          Integer[] inorder = numTraversals[inorderTraversalIdx];
+
+          boolean[] result = new boolean[1];
+          result[0] = true;
+
+          Map<Integer, Integer> map = new HashMap<>();
+          for (int i = 0; i < inorder.length; i++)
+               map.put(inorder[i], i);
+
+          util(preorder, map, postorder, 0, inorder.length - 1, 0, postorder.length - 1, result);
+
+          if (result[0]) {
+               return formatTraversalString(preorderTraversalIdx, inorderTraversalIdx, postorderTraversalIdx);
+          } else {
+               return "Invalid Traversals";
           }
 
-          Integer[] postorder = tree.postorder();
+          // BinaryTree tree = new BinaryTree(numTraversals[preorderTraversalIdx][0]);
+          // for (int i = 1; i < numTraversals[preorderTraversalIdx].length; i++) {
+          //      tree.add(numTraversals[preorderTraversalIdx][i], 0);
+          // }
 
-          for (int i = 0; i < numTraversals[postorderTraversalIdx].length; i++) {
-               if (!postorder[i].equals(numTraversals[postorderTraversalIdx][i])) {
-                    return "Invalid traversals";
-               }
-          }
+          // Integer[] postorder = tree.postorder();
 
-          return formatTraversalString(preorderTraversalIdx, inorderTraversalIdx, postorderTraversalIdx);
+          // for (int i = 0; i < numTraversals[postorderTraversalIdx].length; i++) {
+          //      if (!postorder[i].equals(numTraversals[postorderTraversalIdx][i])) {
+          //           return "Invalid traversals";
+          //      }
+          // }
+
+          // return formatTraversalString(preorderTraversalIdx, inorderTraversalIdx, postorderTraversalIdx);
      }
+
+     private static void util(Integer[] pre, Map<Integer, Integer> map, Integer[] post, int inStart, int inEnd, int preIndex, int postIndex, boolean[] result) {
+        if (inStart > inEnd)
+            return;
+
+        Integer mid = map.get(pre[preIndex]);
+        if (mid == null || pre[preIndex] != post[postIndex]) {
+            result[0] = false;
+            return;
+        }
+
+        // check for left part of tree
+        util(pre, map, post, inStart, mid - 1, preIndex + 1, postIndex - (inEnd - mid) - 1, result);
+
+        // check for right part of tree
+        util(pre, map, post, mid + 1, inEnd, preIndex + (mid - inStart) + 1, postIndex - 1, result);
+    }
+
 
      private static Integer[] fromStringToInt(String[] str) {
           return Arrays.stream(str).map(Integer::parseInt).toArray(Integer[]::new);
